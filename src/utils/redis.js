@@ -1,7 +1,9 @@
 'use strict'
 const redis = require('redis')
+const env = require('../envHelper')
+
 const client = redis.createClient({
-	url: process.env.REDIS_HOST,
+	url: env.REDIS_HOST,
 })
 
 client.on('error', (err) => console.log('Redis Client Error: ', err))

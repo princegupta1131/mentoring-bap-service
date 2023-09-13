@@ -1,5 +1,6 @@
 'use strict'
 const { verifyHeader } = require('@utils/auth')
+const env = require('../envHelper')
 
 const unauthenticatedResponse = (message, res) => {
 	res.status(401).json({
@@ -18,7 +19,7 @@ exports.authVerifier = async (req, res, next) => {
 	try {
 		const authHeader = req.headers['authorization'] || false
 		const proxyHeader = req.headers['proxy-authorization'] || false
-		const authEnabled = process.env.AUTH_ENABLED === 'false' ? false : true
+		const authEnabled = env.AUTH_ENABLED === 'false' ? false : true
 		if (authEnabled) {
 			let proxyVerified = false
 			if (!authHeader) return unauthenticatedResponse('Authentication Failed', res)

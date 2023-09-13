@@ -2,12 +2,12 @@
 const _sodium = require('libsodium-wrappers')
 const { base64_variants } = require('libsodium-wrappers')
 const { getSubscriberDetails } = require('@utils/lookup')
-
+const env = require('../envHelper')
 exports.createAuthorizationHeader = async (message) => {
 	const { signingString, expires, created } = await createSigningString(JSON.stringify(message))
-	const signature = await signMessage(signingString, process.env.PRIVATE_KEY || '')
-	const subscriberId = process.env.SUBSCRIBER_ID
-	const header = `Signature keyId="${subscriberId}|${process.env.UNIQUE_ID}|ed25519",algorithm="ed25519",created="${created}",expires="${expires}",headers="(created) (expires) digest",signature="${signature}"`
+	const signature = await signMessage(signingString, env.PRIVATE_KEY || '')
+	const subscriberId = env.SUBSCRIBER_ID
+	const header = `Signature keyId="${subscriberId}|${env.UNIQUE_ID}|ed25519",algorithm="ed25519",created="${created}",expires="${expires}",headers="(created) (expires) digest",signature="${signature}"`
 	return header
 }
 

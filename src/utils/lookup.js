@@ -1,5 +1,7 @@
 'use strict'
 const axios = require('axios')
+const env = require('../envHelper')
+
 
 exports.getSubscriberDetails = async (subscriberId, uniqueKeyId) => {
 	try {
@@ -18,7 +20,7 @@ exports.getSubscriberDetails = async (subscriberId, uniqueKeyId) => {
 
 exports.registryLookup = async (lookupParameter) => {
 	try {
-		const response = await axios.post(process.env.BECKN_REGISTRY_URI + '/lookup', lookupParameter)
+		const response = await axios.post(env.BECKN_REGISTRY_URI + '/lookup', lookupParameter)
 		const subscribers = []
 		response.data.forEach((data) => {
 			try {

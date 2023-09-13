@@ -1,18 +1,29 @@
 'use strict'
 const { v4: uuidv4 } = require('uuid')
 const { faker } = require('@faker-js/faker')
+const env = require('../envHelper')
 
 const requestBody = {
 	context: {
-		domain: process.env.DOMAIN,
-		country: process.env.COUNTRY,
-		city: process.env.CITY,
-		action: 'temp',
-		bap_id: process.env.BAP_ID,
-		bap_uri: process.env.BAP_URI,
+		domain: env.DOMAIN,
+		location: {
+			country: {
+				name: env.COUNTRY,
+				code: env.COUNTRY
+			},
+			city: {
+				name: env.CITY,
+				code: env.CITY
+			}
+		},
+		country: env.COUNTRY,
+		city: env.CITY,
+		action: 'serach',
+		bap_id: env.BAP_ID,
+		bap_uri: env.BAP_URI,
 		timestamp: new Date().toISOString(),
 		message_id: uuidv4(),
-		core_version: '1.0.0',
+		version: '1.1.0',
 		ttl: 'PT1S',
 	},
 	message: {},

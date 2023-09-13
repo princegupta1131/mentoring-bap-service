@@ -9,7 +9,7 @@ exports.postRequest = async (url, headers, body, { shouldSign }) => {
 		headers = { ...headers, authorization: await createAuthorizationHeader(body) }
 	}
 	return new Promise((resolve, reject) => {
-		axios({ method: 'post', url, data: body, headers, timeout: 3000 })
+		axios({ method: 'post', url, data: body, headers, timeout: 20000 })
 			.then((res) => {
 				console.log(res.data)
 				resolve(res)

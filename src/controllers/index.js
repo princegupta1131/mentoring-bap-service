@@ -3,20 +3,23 @@ const requester = require('@utils/requester')
 const { requestBodyGenerator } = require('@utils/requestBodyGenerator')
 const { cacheSave, cacheGet, getKeys, getMessage, sendMessage } = require('@utils/redis')
 const { v4: uuidv4 } = require('uuid')
+const env = require('../envHelper')
 
 exports.search = async (req, res) => {
 	try {
 		const transactionId = uuidv4()
 		const messageId = uuidv4()
 		await requester.postRequest(
-			process.env.BECKN_BG_URI + '/search',
+			env.BECKN_BG_URI + '/search',
 			{},
 			requestBodyGenerator('bg_search', { keyword: req.query.keyword }, transactionId, messageId),
 			{ shouldSign: true }
 		)
 		setTimeout(async () => {
-			const data = await cacheGet(`${transactionId}:${messageId}:ON_SEARCH`)
-			if (!data) res.status(403).send({ message: 'No data Found' })
+			// const data = await cacheGet(`${transactionId}:${messageId}:ON_SEARCH`)
+			const data = await cacheGet('qwerty')
+
+			if (!data) res.status(403).send({ message: 'No search  data Found' })
 			else res.status(200).send({ data: data })
 		}, 3000)
 	} catch (err) {
